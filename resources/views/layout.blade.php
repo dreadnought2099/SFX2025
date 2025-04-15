@@ -12,12 +12,19 @@
 </head>
 
 <body>
-    <div id="success-message-container" class="absolute top-24 right-4 z-10">
-        @if (session('success') || session('error'))
+    <div id="message-container" class="absolute top-24 right-4 z-10">
+        @if (session('success') || session('error') || $errors->any())
+            <!-- Success or Error message -->
             <div id="message"
                 class="p-3 rounded-md shadow-lg border-l-4
-                 {{ session('success') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                    {{ session('success') ? 'bg-green-100 text-green-700' : (session('error') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">
+                <!-- Display success or error message -->
                 {{ session('success') ?? session('error') }}
+
+                <!-- Display validation errors if any -->
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
             </div>
 
             <script>

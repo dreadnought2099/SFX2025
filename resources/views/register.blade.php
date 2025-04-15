@@ -6,7 +6,7 @@
         <div class="w-[450px] p-8 bg-white rounded-2xl shadow ">
             <h3 class="text-2xl mb-4 text-orange-900 font-bold">User Registration</h3>
             <form action="{{ route('register') }}" method="post">
-                @csrf()
+                @csrf
                 <div class="my-3">
                     <label for="last_name">Last Name</label>
                     <input type="text" name="last_name" id="last_name">
@@ -31,9 +31,13 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password">
                 </div>
+                <div class="my-3">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation">
+                </div>
 
                 <div class="flex gap-4 items-center">
-                    <button class="primary"> Submit </button>
+                    <button type="submit" class="primary"> Submit </button>
                     <button class="secondary" type="reset">Clear</button>
                     <a href="{{ route('login') }}"
                         class="text-green-800 font-bold px-4 py-2 bg-green-200 border border-green-800 rounded">Login</a>

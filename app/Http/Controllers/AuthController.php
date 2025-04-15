@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\Catch_;
 
@@ -31,6 +33,8 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
+        Mail::to($user->email)->queue(new WelcomeMail($user));
+
         return redirect()->route('products.index')->with('success', 'Login successful');
     }
 
@@ -38,6 +42,7 @@ class AuthController extends Controller
     {
         return view('/register');
     }
+
 
     public function register(Request $request)
     {
@@ -67,7 +72,7 @@ class AuthController extends Controller
                 'password' => Hash::make($validated['password']),
             ]);
 
-            // Mail::to($user->email)->queue(new WelcomeMail($user));
+            Mail::to($user->email)->queue(new WelcomeMail($user));
 
             Auth::login($user);
 
