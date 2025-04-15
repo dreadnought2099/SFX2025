@@ -14,5 +14,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
